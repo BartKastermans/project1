@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $wachtwoord = $_POST["wachtwoord"];
 
     $sql = "SELECT gebruikersnaam, wachtwoord
-            FROM gebruikers 
+            FROM gebruikers
             WHERE gebruikersnaam='$gebruikersnaam' AND wachtwoord='$wachtwoord'";
     $result = $conn->query($sql);
 
