@@ -5,6 +5,8 @@ $username = "root";
 $password = "";
 $dbname = "project1login";
 
+session_start();
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
@@ -48,11 +50,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             FROM gebruikers
             WHERE gebruikersnaam='$gebruikersnaam' AND wachtwoord='$gehashedwachtwoord'";
     $result = $conn->query($sql);
-
+/*
     if ($result->num_rows == 1) {
         $_SESSION["gebruikersnaam"] = $gebruikersnaam;
         header("Location: index.php");
         exit();
+*/
+if (!isset($_SESSION['authenticated']) || !$_SESSION['authenticated']) {
+    header('Location: index.php');
+    exit;
+
     } else {
         // If no matching user is found, display error message
         $error_message = "Invalid username or password.";

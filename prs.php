@@ -40,10 +40,7 @@
 </style>
 
 <?
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "project1login";
+include 'databaseconn.php';
 
 $id = $_GET["id"];
 $delete = $_GET["delete"];
@@ -58,12 +55,6 @@ $land = $_GET["land"];
 $pasaan = $_GET["pasaan"];
 $submit = $_GET["submit"];
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 /*
 if ($add == 1) {
 

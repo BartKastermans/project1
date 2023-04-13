@@ -40,10 +40,7 @@
 </style>
 
 <?
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "project1login";
+include 'databaseconn.php';
 
 $id = $_GET["id"];
 $delete = $_GET["delete"];
@@ -58,12 +55,6 @@ $land = $_GET["land"];
 $pasaan = $_GET["pasaan"];
 $submit = $_GET["submit"];
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 /*
 if ($add == 1) {
 
@@ -151,7 +142,7 @@ if ($result->num_rows > 0) {
 
             echo('<tr style="background-color:#' . $kleur . ';"> <td>' . $row["id"] . '</td> 
     <td><a href="index.php?edit=1&id=' . $row["id"] . '">' . $row["gebruikersnaam"] . '</a></td> 
-    <td><a href="index.php?edit=1&id=' . $row["id"] . '">' . $row["bench_press"] . '</a></td> 
+    <td><a href="index.php?edit=1&id=' . $row["id"] . '">' . $row["bench_press"] . '</a> Kg</td> 
     <td><form action="?" method="get"><input type="hidden" name="delete" value="1"><input type="hidden" name="id" value="' . $row["id"] . '"></form></td> </tr>');
         }
         echo "</table>";
