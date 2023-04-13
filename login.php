@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Pagina</title>
+    <title>Login</title>
     <style>
         body{
             background-image: url("https://cdn.dribbble.com/users/1638984/screenshots/3571431/media/caf6bd6916be9c1195c3fe4c0f748d72.jpg");
@@ -42,10 +42,11 @@ if ($conn->connect_error) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gebruikersnaam = $_POST["gebruikersnaam"];
     $wachtwoord = $_POST["wachtwoord"];
+    $gehashedwachtwoord = sha1($wachtwoord);
 
     $sql = "SELECT gebruikersnaam, wachtwoord
             FROM gebruikers
-            WHERE gebruikersnaam='$gebruikersnaam' AND wachtwoord='$wachtwoord'";
+            WHERE gebruikersnaam='$gebruikersnaam' AND wachtwoord='$gehashedwachtwoord'";
     $result = $conn->query($sql);
 
     if ($result->num_rows == 1) {
@@ -81,6 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <input type="submit" value="Login">
     </form>
+    <p>Geen account? <a href="registreren.php">Registreer nu</a></p>
 </div>
 </body>
 </html>
