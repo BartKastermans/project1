@@ -14,7 +14,7 @@
         left: -200px;
         width: 150px;
         height: 100%;
-        background-color: #f2f2f2;
+        background-color: #eeeff1;
         transition: left 0.2s ease-in-out;
     }
 
@@ -33,6 +33,9 @@
     }
     .menu-toggleleft .menu-toggle{
         left: 155px;
+    }
+    body{
+        background-color: #303339;
     }
 </style>
 
@@ -152,7 +155,7 @@ if ($result->num_rows > 0) {
     <td><form action="?" method="get"><input type="hidden" name="delete" value="1"><input type="hidden" name="id" value="' . $row["id"] . '"></form></td> </tr>');
         }
         echo "</table>";
-        echo '<a href="index.php?add=1">Record toevoegen</a>';
+        //echo '<a href="index.php?add=1">Record toevoegen</a>';
         echo "</div>";
     } else {
         echo "0 results";
