@@ -40,6 +40,11 @@
 </style>
 
 <?
+if (!isset($_COOKIE['logincookie'])) {
+    header("Location: login.php");
+    exit();
+}
+
 include 'databaseconn.php';
 
 echo $_COOKIE["logincookie"];
@@ -135,6 +140,7 @@ if ($result->num_rows > 0) {
             <th>ID</th>
             <th>GebruikersNaam</th>
             <th>Bench Press</th>
+            <th>Dead Lift</th>
         </tr>
         <?php
         while($row = $result->fetch_assoc()) {
@@ -148,8 +154,9 @@ if ($result->num_rows > 0) {
             }
 
             echo('<tr style="background-color:#' . $kleur . ';"> <td>' . $row["id"] . '</td> 
-    <td><a href="index.php?edit=1&id=' . $row["id"] . '">' . $row["gebruikersnaam"] . '</a></td> 
-    <td><a href="index.php?edit=1&id=' . $row["id"] . '">' . $row["bench_press"] . ' Kg</a></td> 
+    <td><a href="prs.php?edit=1&id=' . $row["id"] . '">' . $row["gebruikersnaam"] . '</a></td> 
+    <td><a href="prs.php?edit=1&id=' . $row["id"] . '">' . $row["bench_press"] . ' Kg</a></td>
+    <td><a href="prs.php?edit=1&id=' . $row["id"] . '">' . $row["dead_lift"] . '</a> Kg</td>
     <td><form action="?" method="get"><input type="hidden" name="delete" value="1"><input type="hidden" name="id" value="' . $row["id"] . '"></form></td> </tr>');
         }
         echo "</table>";

@@ -37,9 +37,25 @@
     body{
         background-color: #303339;
     }
+    .ingelogdals{
+        background-color: #3368EF;
+        height: 65px;
+        width: 150px;
+        border: 1px solid;
+        text-align: center;
+        font-family: Didot;
+        position: fixed;
+        top: 5px;
+        right: 20px;
+    }
 </style>
 <br><br>
+
 <?
+if (!isset($_COOKIE['logincookie'])) {
+    header("Location: login.php");
+    exit();
+}
 include 'databaseconn.php';
 
 echo $_COOKIE["logincookie"];
@@ -51,11 +67,13 @@ $kleur = "ffffff";
 $sure = $_GET["sure"];
 $add = $_GET["add"];
 $benchpress = $_GET["bench_press"];
+$deadlift = $_GET["dead_lift"];
 $gebruikersnaam = $_GET["gebruikersnaam"];
 $edit = $_GET["edit"];
 $land = $_GET["land"];
 $pasaan = $_GET["pasaan"];
 $submit = $_GET["submit"];
+$nieuweoefening = $_GET["nieuweoefening"]
 
 /*
 if ($add == 1) {
@@ -81,10 +99,18 @@ if ($add == 1) {
     }
 }
 */
+?>
+<head>
+    <center><b><h1 style="color: white; position: sticky;">Vul je oefeningen in</h1></b></center>
+</head>
+<br>
+<b><p style="color: #ffffff;">Datum: <?php echo date("Y-m-d"); ?> </p></b>
+<?php
+
 if ($edit == 1) {
 
     if ($pasaan == 1) {
-        $sqledit = "UPDATE gebruikers SET bench_press = '$benchpress' WHERE id = $id";
+        $sqledit = "UPDATE gebruikers SET bench_press= '$benchpress', dead_lift = '$deadlift' WHERE id = $id";
         $result = $conn->query($sqledit);
         echo "Het record is aangepast in de database. <br><br>";
     }
@@ -99,15 +125,40 @@ if ($edit == 1) {
             <input type="hidden" name="edit" value="1">
             <input type="hidden" name="pasaan" value="1">
             <input type="hidden" name="id" value="<?php echo "$id"; ?>">
-            bench_press: <input type="text" name="bench_press" value="<?php echo $row["bench_press"]; ?>"> <br>
+            Bench Press: <input type="text" name="bench_press" value="<?php echo $row["bench_press"]; ?>"> <br>
+            Dead Lift: <input type="text" name="dead_lift" value="<?php echo $row["dead_lift"]; ?>"> <br>
             <input type="submit" style="color:Green" value="Pas aan">
         </form> <br>
         <?php
     }
 }
+echo "<b><a href='?add=1' style='color: white'>voeg een oefening toe:</a></b>";
+if ($add == 1) {
 
+    ?>
+    <form action="?" method="get">
+        <input type="hidden" name="add" value="1">
+        Oefening Naam: <input type="text" name="nieuweoefening" value="<?php echo "$nieuweoefening"; ?>"> <br>
+        <input type="submit" style="color:Green" name="submit" value="Toevoegen">
+    </form>
+    <?php
+    if ($submit == "Toevoegen"){
+        if ($nieuweoefening != "") {
+            $sqladd = "ALTER TABLE gebruikers
+                        ADD $nieuweoefening varchar(4);";
+            $result = $conn->query($sqladd);
 
-$sql = "SELECT * FROM gebruikers ORDER BY id";
+            echo "De gast is toegevoegd in de database. <br><br>";
+        } else
+        {
+            echo "Alle velden moeten ingevuld zijn. <br><br>";
+        }
+    }
+}
+$sql = "SELECT * 
+        FROM gebruikers 
+        WHERE gebruikersnaam = '$_COOKIE[logincookie]'
+        ORDER BY id";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -125,11 +176,13 @@ if ($result->num_rows > 0) {
 </div>
 
 <div class="displayprs" >
-    <table style="width: 350px; height: 120px;" >
+    <table style="width: 450px; height: 120px;" >
         <tr style="background-color:#cccccc;">
             <th>ID</th>
             <th>GebruikersNaam</th>
             <th>Bench Press</th>
+            <th>Dead Lift</th>
+            <th>Dag Totaal</th>
         </tr>
         <?php
         while($row = $result->fetch_assoc()) {
@@ -145,6 +198,8 @@ if ($result->num_rows > 0) {
             echo('<tr style="background-color:#' . $kleur . ';"> <td>' . $row["id"] . '</td> 
     <td><a href="index.php?edit=1&id=' . $row["id"] . '">' . $row["gebruikersnaam"] . '</a></td> 
     <td><a href="index.php?edit=1&id=' . $row["id"] . '">' . $row["bench_press"] . '</a> Kg</td> 
+    <td><a href="index.php?edit=1&id=' . $row["id"] . '">' . $row["dead_lift"] . '</a> Kg</td> 
+    <td><a href="index.php?edit=1&id=' . $row["id"] . '">' . $row["totaal"] . '</a> Kg</td> 
     <td><form action="?" method="get"><input type="hidden" name="delete" value="1"><input type="hidden" name="id" value="' . $row["id"] . '"></form></td> </tr>');
         }
         echo "</table>";
@@ -166,3 +221,11 @@ if ($result->num_rows > 0) {
             });
 
         </script>
+
+
+</table>
+</div>
+
+<div class="ingelogdals">
+    <p>Ingelogd als:<br> <?php echo $_COOKIE["logincookie"] ?></p>
+</div>

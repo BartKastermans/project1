@@ -24,7 +24,6 @@ include 'databaseconn.php';
             text-align: center;
             font-family: Didot;
             margin: auto;
-
         }
     </style>
 </head>

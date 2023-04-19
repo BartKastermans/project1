@@ -47,6 +47,12 @@
         <li><a href="kalender.php">Kalender</a></li>
     </ul>
 </div>
+<?php
+if (!isset($_COOKIE['logincookie'])) {
+header("Location: login.php");
+exit();
+}
+?>
 
 <script>
     document.querySelector('.menu-toggle').addEventListener('click', function() {
