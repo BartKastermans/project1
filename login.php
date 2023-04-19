@@ -1,18 +1,7 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "project1login";
+include 'databaseconn.php';
 
-session_start();
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 ?>
 
@@ -46,22 +35,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $wachtwoord = $_POST["wachtwoord"];
     $gehashedwachtwoord = sha1($wachtwoord);
 
-    $sql = "SELECT gebruikersnaam, wachtwoord
+    $sql = "SELECT gebruikersnaam, wachtwoord, id
             FROM gebruikers
             WHERE gebruikersnaam='$gebruikersnaam' AND wachtwoord='$gehashedwachtwoord'";
     $result = $conn->query($sql);
-/*
+
+    setcookie("logincookie", $gebruikersnaam);
+
+
     if ($result->num_rows == 1) {
         $_SESSION["gebruikersnaam"] = $gebruikersnaam;
         header("Location: index.php");
         exit();
-*/
-if (!isset($_SESSION['authenticated']) || !$_SESSION['authenticated']) {
-    header('Location: index.php');
-    exit;
-
     } else {
-        // If no matching user is found, display error message
         $error_message = "Invalid username or password.";
     }
 }
@@ -91,5 +77,8 @@ if (!isset($_SESSION['authenticated']) || !$_SESSION['authenticated']) {
     </form>
     <p>Geen account? <a href="registreren.php">Registreer nu</a></p>
 </div>
+<?php
+echo $_COOKIE["logincookie"];
+?>
 </body>
 </html>

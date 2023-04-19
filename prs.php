@@ -42,6 +42,8 @@
 <?
 include 'databaseconn.php';
 
+echo $_COOKIE["logincookie"];
+
 $id = $_GET["id"];
 $delete = $_GET["delete"];
 $teller = 1;
@@ -54,6 +56,7 @@ $edit = $_GET["edit"];
 $land = $_GET["land"];
 $pasaan = $_GET["pasaan"];
 $submit = $_GET["submit"];
+$gebruikersnaamprs = $_COOKIE["logincookie"];
 
 /*
 if ($add == 1) {
@@ -105,7 +108,11 @@ if ($edit == 1) {
 }
 
 
-$sql = "SELECT * FROM gebruikers ORDER BY id";
+$sql = "SELECT *
+        FROM gebruikers
+        Where gebruikersnaam = '$_COOKIE[logincookie]'
+        ORDER BY id";
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

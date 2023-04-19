@@ -38,9 +38,11 @@
         background-color: #303339;
     }
 </style>
-
+<br><br>
 <?
 include 'databaseconn.php';
+
+echo $_COOKIE["logincookie"];
 
 $id = $_GET["id"];
 $delete = $_GET["delete"];
