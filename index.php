@@ -73,7 +73,9 @@ $edit = $_GET["edit"];
 $land = $_GET["land"];
 $pasaan = $_GET["pasaan"];
 $submit = $_GET["submit"];
-$nieuweoefening = $_GET["nieuweoefening"]
+$nieuweoefening = $_GET["nieuweoefening"];
+$keuze = $_GET["keuze"];
+$onderdeel = $_GET["onderdeel"];
 
 /*
 if ($add == 1) {
@@ -132,7 +134,31 @@ if ($edit == 1) {
         <?php
     }
 }
-echo "<b><a href='?add=1' style='color: white'>voeg een oefening toe:</a></b>";
+?>
+
+<form method="get">
+    <select name="onderdeel" id="onderdeel">
+        <option value="">--- Kies een onderdeel ---</option>
+        <option selected value="chest">Chest</option>
+        <option selected value="schouder">Schouder</option>
+        <option selected value="bicep">Bicep</option>
+    </select><br>
+    <input type="submit" value="Submit"><br><br>
+</form>
+<?php if ($onderdeel != "") { ?>
+<form method="get" action="?">
+    <select name="keuze" id="keuze">
+        <?php
+        $sql = "SELECT $onderdeel FROM oefeningen";
+        $result = mysqli_query($conn,$sql);
+        foreach ($result as $option) {?>
+        <option selected><?php echo $option[$onderdeel]; ?></option><?php } ?>
+                    </select><br>
+                    <input type="submit" value="Kies">
+                </form>
+                <?php } ?>
+<?php
+echo "<b><a href='?add=1' style='color: white;'>voeg een oefening toe:</a></b>";
 if ($add == 1) {
 
     ?>
@@ -145,7 +171,7 @@ if ($add == 1) {
     if ($submit == "Toevoegen"){
         if ($nieuweoefening != "") {
             $sqladd = "ALTER TABLE gebruikers
-                        ADD $nieuweoefening varchar(4);";
+                        ADD $nieuweoefening varchar(6);";
             $result = $conn->query($sqladd);
 
             echo "De gast is toegevoegd in de database. <br><br>";

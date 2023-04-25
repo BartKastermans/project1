@@ -37,6 +37,17 @@
     body{
         background-color: #303339;
     }
+    .ingelogdals{
+        background-color: #3368EF;
+        height: 65px;
+        width: 150px;
+        border: 1px solid;
+        text-align: center;
+        font-family: Didot;
+        position: fixed;
+        top: 5px;
+        right: 20px;
+    }
 </style>
 
 <?
@@ -178,3 +189,6 @@ if ($result->num_rows > 0) {
             });
 
         </script>
+        <div class="ingelogdals">
+            <p>Ingelogd als:<br> <?php echo $_COOKIE["logincookie"] ?></p>
+        </div>
