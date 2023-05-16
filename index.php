@@ -48,9 +48,26 @@
         top: 5px;
         right: 20px;
     }
-</style>
-<br><br>
+    .button-container {
+        text-align: center;
+    }
 
+    .round-button {
+        border: none;
+        border-radius: 50%;
+        background-color: yellow;
+        color: black;
+        padding: 15px 15px;
+        font-size: 25px;
+        cursor: pointer;
+    }
+</style>
+<div class="button-container" style="height: 0px">
+    <button class="round-button" onclick="navigateToPage('index.php')">📖</button>
+    <button class="round-button" onclick="navigateToPage('oefeningen.php')">💪</button>
+    <button class="round-button" onclick="navigateToPage('page3.php')">3</button>
+</div>
+<br><br>
 <?
 if (!isset($_COOKIE['logincookie'])) {
     header("Location: login.php");
@@ -59,6 +76,8 @@ if (!isset($_COOKIE['logincookie'])) {
 include 'databaseconn.php';
 
 echo $_COOKIE["logincookie"];
+echo "<br>";
+echo $_COOKIE["id"];
 
 $id = $_GET["id"];
 $delete = $_GET["delete"];
@@ -76,6 +95,7 @@ $submit = $_GET["submit"];
 $nieuweoefening = $_GET["nieuweoefening"];
 $keuze = $_GET["keuze"];
 $onderdeel = $_GET["onderdeel"];
+$gebied = $_GET["gebied"];
 
 /*
 if ($add == 1) {
@@ -102,8 +122,9 @@ if ($add == 1) {
 }
 */
 ?>
+
 <head>
-    <center><b><h1 style="color: white; position: sticky;">Vul je oefeningen in</h1></b></center>
+    <center><b><h1 style="color: white; position: sticky; height: 0px">Trainingen</h1></b></center>
 </head>
 <br>
 <b><p style="color: #ffffff;">Datum: <?php echo date("Y-m-d"); ?> </p></b>
@@ -134,18 +155,22 @@ if ($edit == 1) {
         <?php
     }
 }
+/*
 ?>
 
-<form method="get">
+<form method="get" action="?">
     <select name="onderdeel" id="onderdeel">
-        <option value="">--- Kies een onderdeel ---</option>
-        <option selected value="chest">Chest</option>
-        <option selected value="schouder">Schouder</option>
-        <option selected value="bicep">Bicep</option>
+        <?php
+        $sql = "SELECT gebied FROM gebieden";
+        $result = mysqli_query($conn,$sql);
+        foreach ($result as $option) {?>
+            <option selected><?php echo $option['gebied']; ?></option><?php } ?>
     </select><br>
-    <input type="submit" value="Submit"><br><br>
+    <input type="submit" value="Kies">
 </form>
-<?php if ($onderdeel != "") { ?>
+<?php
+*/
+if ($onderdeel != "") { ?>
 <form method="get" action="?">
     <select name="keuze" id="keuze">
         <?php
@@ -170,11 +195,11 @@ if ($add == 1) {
     <?php
     if ($submit == "Toevoegen"){
         if ($nieuweoefening != "") {
-            $sqladd = "ALTER TABLE gebruikers
-                        ADD $nieuweoefening varchar(6);";
+            $sqladd = "ALTER TABLE trainingen
+                        ADD $nieuweoefening varchar(25);";
             $result = $conn->query($sqladd);
 
-            echo "De gast is toegevoegd in de database. <br><br>";
+            echo "De oefening is toegevoegd in de database. <br><br>";
         } else
         {
             echo "Alle velden moeten ingevuld zijn. <br><br>";
@@ -197,6 +222,7 @@ if ($result->num_rows > 0) {
     <ul>
         <li><a href="index.php">Home</a></li>
         <li><a href="prs.php">PRs</a></li>
+        <li><a href="trainingen.php">Trainingen</a></li>
         <li><a href="kalender.php">Kalender</a></li>
     </ul>
 </div>
@@ -255,3 +281,9 @@ if ($result->num_rows > 0) {
 <div class="ingelogdals">
     <p>Ingelogd als:<br> <?php echo $_COOKIE["logincookie"] ?></p>
 </div>
+
+<script>
+    function navigateToPage(pageUrl) {
+        window.location.href = pageUrl;
+    }
+</script>

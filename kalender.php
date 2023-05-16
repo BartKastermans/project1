@@ -44,6 +44,7 @@
     <ul>
         <li><a href="index.php">Home</a></li>
         <li><a href="prs.php">PRs</a></li>
+        <li><a href="trainingen.php">Trainingen</a></li>
         <li><a href="kalender.php">Kalender</a></li>
     </ul>
 </div>

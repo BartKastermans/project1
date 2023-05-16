@@ -1,7 +1,7 @@
 <?php
 
 include 'databaseconn.php';
-
+$id = $_GET["id"];
 
 ?>
 
@@ -39,11 +39,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             WHERE gebruikersnaam='$gebruikersnaam' AND wachtwoord='$gehashedwachtwoord'";
     $result = $conn->query($sql);
 
-    setcookie("logincookie", $gebruikersnaam);
 
 
-    if ($result->num_rows == 1) {
-        $_SESSION["gebruikersnaam"] = $gebruikersnaam;
+
+
+    if ($row = $result->fetch_assoc()) {
+        setcookie("logincookie", $gebruikersnaam, time()+3600);
+        setcookie("id", $row['id'], time()+3600);
         header("Location: index.php");
         exit();
     } else {
