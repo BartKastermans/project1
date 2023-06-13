@@ -227,17 +227,6 @@ if ($result->num_rows > 0) {
 
     $conn->close();
     ?>
-
-        <script>
-            document.querySelector('.menu-toggle').addEventListener('click', function() {
-                document.body.classList.toggle('menu-open');
-                document.body.classList.toggle('displayprsside');
-                document.body.classList.toggle('menu-toggleleft');
-            });
-
-        </script>
-
-
 </table>
 </div>
 

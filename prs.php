@@ -1,10 +1,5 @@
 <style>
-    .displayprs {
-        position: relative;
-        padding-left: 10px;
-        left: 0px;
-        bottom: -35px;
-    }
+
     body{
         background-color: #303339;
     }
@@ -142,14 +137,7 @@ if ($result->num_rows > 0) {
         $conn->close();
         ?>
 
-        <script>
-            document.querySelector('.menu-toggle').addEventListener('click', function() {
-                document.body.classList.toggle('menu-open');
-                document.body.classList.toggle('displayprsside');
-                document.body.classList.toggle('menu-toggleleft');
-            });
 
-        </script>
         <div class="ingelogdals">
             <p>Ingelogd als:<br> <?php echo $_COOKIE["logincookie"] ?></p>
         </div>

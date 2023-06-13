@@ -1,4 +1,13 @@
 <style>
+    .displayprs {
+        position: relative;
+        padding-left: 10px;
+        left: 0px;
+        bottom: -35px;
+    }
+    .displayprsside .displayprs{
+        left: 135px;
+    }
     .side-menu {
         position: fixed;
         top: 0;
@@ -35,6 +44,15 @@
         <li><a href="index.php">Home</a></li>
         <li><a href="prs.php">PRs</a></li>
         <li><a href="trainingen.php">Trainingen</a></li>
-        <li><a href="kalender.php">Kalender</a></li>
+        <li><a href="oefeningen.php">Oefeningen</a></li>
     </ul>
 </div>
+
+<script>
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+        document.body.classList.toggle('menu-open');
+        document.body.classList.toggle('displayprsside');
+        document.body.classList.toggle('menu-toggleleft');
+    });
+
+</script>
