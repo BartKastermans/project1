@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php
     if ($submit == "Registreer"){
         if ($gebruikersnaam != "" and $wachtwoord != "") {
-            $sqladd = "INSERT INTO gebruikers (gebruikersnaam, wachtwoord) VALUES ('$gebruikersnaam', '$gehashedwachtwoord')";
+            $sqladd = "INSERT INTO gebruikers (gebruikersnaam, wachtwoord, rol) VALUES ('$gebruikersnaam', '$gehashedwachtwoord', 'gebruiker')";
             $result = $conn->query($sqladd);
         }
     }
